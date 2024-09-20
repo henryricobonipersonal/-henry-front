@@ -1,12 +1,12 @@
-import { XCircleIcon } from "@heroicons/react/24/outline";
-import { forwardRef, type ComponentProps } from "react";
-import ReactInputMask from "react-input-mask";
+import { XCircleIcon } from '@heroicons/react/24/outline'
+import { type ComponentProps, forwardRef } from 'react'
+import ReactInputMask from 'react-input-mask'
 
-import { cn } from "../../utils/cn";
+import { cn } from '@app/utils/cn'
 
-export interface InputProps extends ComponentProps<"input"> {
-	error?: string;
-	mask: string;
+export interface InputProps extends ComponentProps<'input'> {
+	error?: string
+	mask: string
 }
 
 export const InputMask = forwardRef<HTMLInputElement, InputProps>(
@@ -16,10 +16,10 @@ export const InputMask = forwardRef<HTMLInputElement, InputProps>(
 				<ReactInputMask
 					type={type}
 					mask={mask}
-					maskChar={"_"}
+					maskChar={'_'}
 					placeholder={props.placeholder}
 					className={cn(
-						"flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-all duration-300 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-orange500 focus-visible:border-none",
+						'flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-all duration-300 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-orange500 focus-visible:border-none',
 						className,
 					)}
 					ref={ref as any}
@@ -35,7 +35,7 @@ export const InputMask = forwardRef<HTMLInputElement, InputProps>(
 					</div>
 				)}
 			</div>
-		);
+		)
 	},
-);
-InputMask.displayName = "Input";
+)
+InputMask.displayName = 'Input'

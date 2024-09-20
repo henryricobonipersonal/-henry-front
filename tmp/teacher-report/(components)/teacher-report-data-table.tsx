@@ -1,15 +1,15 @@
 'use client'
 
 import {
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+	type ColumnFiltersState,
+	type SortingState,
+	type VisibilityState,
+	flexRender,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	useReactTable,
 } from '@tanstack/react-table'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
@@ -19,37 +19,43 @@ import { columns } from '@/app/(dashboard)/teacher-report/(components)/teacher-r
 import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from '@/components/ui/table'
-import { numbMessage, strMessage } from '@/utils/custom-error'
 import { useTeacherReports } from '@/hooks/teacher-reports/use-teacher-reports'
+import { numbMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
 
 const schema = z.object({
-  id: z.number(numbMessage('identificador')).min(1, 'O campo identificador é obrigatório'),
-  month: z.string(strMessage('mês')).min(1, 'O campo mês é obrigatório'),
-  year: z.string(strMessage('ano')).min(1, 'O campo ano é obrigatório'),
-  totalNumberOfClasses: z.number(numbMessage('número total de aulas')).min(1, 'O campo número total de aulas é obrigatório'),
-  priceClass: z.number(numbMessage('preço por aula')).min(1, 'O campo preço por aula é obrigatório'),
-  total: z.number(numbMessage('total')).min(1, 'O campo total é obrigatório'),
-  vale: z.number(numbMessage('vale')).min(0, 'O campo vale é obrigatório'),
-  dateVale: z.string(strMessage('data do vale')).min(1, 'O campo data do vale é obrigatório'),
-  totalReceivable: z.number(numbMessage('total a receber')).min(1, 'O campo total a receber é obrigatório'),
-  profitEstimate: z.number(numbMessage('estimativa de lucro')).min(1, 'O campo estimativa de lucro é obrigatório'),
-});
+	id: z.number(numbMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	month: z.string(strMsg('mês')).min(1, 'O campo mês é obrigatório'),
+	year: z.string(strMsg('ano')).min(1, 'O campo ano é obrigatório'),
+	totalNumberOfClasses: z
+		.number(numbMsg('número total de aulas'))
+		.min(1, 'O campo número total de aulas é obrigatório'),
+	priceClass: z.number(numbMsg('preço por aula')).min(1, 'O campo preço por aula é obrigatório'),
+	total: z.number(numbMsg('total')).min(1, 'O campo total é obrigatório'),
+	vale: z.number(numbMsg('vale')).min(0, 'O campo vale é obrigatório'),
+	dateVale: z.string(strMsg('data do vale')).min(1, 'O campo data do vale é obrigatório'),
+	totalReceivable: z
+		.number(numbMsg('total a receber'))
+		.min(1, 'O campo total a receber é obrigatório'),
+	profitEstimate: z
+		.number(numbMsg('estimativa de lucro'))
+		.min(1, 'O campo estimativa de lucro é obrigatório'),
+})
 
-export type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>
 
 export function TeacherReportDataTable() {
 	const router = useRouter()
@@ -110,9 +116,7 @@ export function TeacherReportDataTable() {
 									<DropdownMenuCheckboxItem
 										key={column.id}
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'month' && 'Mês'}
 										{column.id === 'year' && 'Ano'}
@@ -138,10 +142,7 @@ export function TeacherReportDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -151,26 +152,17 @@ export function TeacherReportDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

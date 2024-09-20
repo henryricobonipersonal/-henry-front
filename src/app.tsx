@@ -14,9 +14,9 @@ import { queryClient } from '@app/services/query-client'
 export function App() {
 	return (
 		<HelmetProvider>
-			<Helmet titleTemplate="%s | Meu Contrato Online" />
+			<Helmet titleTemplate="%s | Henry Ricoboni" />
 			<AuthProvider>
-				<ThemeProvider defaultTheme="light" storageKey="@meu-contrato-online:theme">
+				<ThemeProvider defaultTheme="light" storageKey="@henry-ricoboni:theme">
 					<Toaster richColors closeButton expand duration={2500} position="top-right" />
 					<QueryClientProvider client={queryClient}>
 						<AppRoutes />

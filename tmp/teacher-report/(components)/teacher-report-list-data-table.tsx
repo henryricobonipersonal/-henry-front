@@ -25,13 +25,13 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { strMessage } from '@/utils/custom-error'
 import { useTeacherReportLists } from '@/hooks/teacher-report-lists/use-teacher-report-lists'
+import { strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
 
 const schema = z.object({
 	id: z.number().min(1, 'O campo identificador é obrigatório'),
-	name: z.string(strMessage('nome')).min(1, 'O campo nome é obrigatório'),
+	name: z.string(strMsg('nome')).min(1, 'O campo nome é obrigatório'),
 })
 
 export type FormData = z.infer<typeof schema>
@@ -83,9 +83,7 @@ export function TeacherReportListDataTable() {
 				<Input
 					placeholder="Filtrar por nome..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-					onChange={(event) =>
-						table.getColumn('name')?.setFilterValue(event.target.value)
-					}
+					onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
 					className="max-w-sm"
 				/>
 			</div>
@@ -99,10 +97,7 @@ export function TeacherReportListDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -112,26 +107,17 @@ export function TeacherReportListDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

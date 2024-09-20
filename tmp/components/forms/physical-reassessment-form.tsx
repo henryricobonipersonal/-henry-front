@@ -24,7 +24,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from '@/components/ui/accordion'
-import { numbMessage } from '@/utils/custom-error'
+import { numbMsg } from '@/utils/custom-error'
 import { PersonArmsSpread, Ruler } from '@phosphor-icons/react/dist/ssr'
 import { SaveAll } from 'lucide-react'
 
@@ -193,20 +193,11 @@ export function PhysicalReassessmentForm() {
 	}
 
 	return (
-		<form
-			onSubmit={handleSubmit(handlePhysicalAssessment)}
-			className="w-full flex flex-col gap-4"
-		>
+		<form onSubmit={handleSubmit(handlePhysicalAssessment)} className="w-full flex flex-col gap-4">
 			<div className="relative">
-				<Button
-					type="submit"
-					className="fixed top-[80px] right-20 z-[999] max-w-[168px]"
-				>
+				<Button type="submit" className="fixed top-[80px] right-20 z-[999] max-w-[168px]">
 					<span>
-						<SaveAll
-							className="size-5 text-white z-50 mr-1.5"
-							strokeWidth={2}
-						/>
+						<SaveAll className="size-5 text-white z-50 mr-1.5" strokeWidth={2} />
 					</span>
 					Salvar
 				</Button>
@@ -218,9 +209,7 @@ export function PhysicalReassessmentForm() {
 							<div className="shadow bg-orange500 rounded-sm text-white text-2xl w-8 h-8 flex items-center justify-center">
 								<Ruler />
 							</div>
-							<p className="text-gray900 font-semibold">
-								Medidas de Perimetria
-							</p>
+							<p className="text-gray900 font-semibold">Medidas de Perimetria</p>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent>
@@ -240,9 +229,7 @@ export function PhysicalReassessmentForm() {
 											/>
 											<Input
 												placeholder="Diferença"
-												{...register(
-													'perimeterMeasurements.shoulder.difference',
-												)}
+												{...register('perimeterMeasurements.shoulder.difference')}
 											/>
 										</div>
 										<div className="flex gap-2 items-center px-4">
@@ -307,9 +294,7 @@ export function PhysicalReassessmentForm() {
 											/>
 											<Input
 												placeholder="Diferença"
-												{...register(
-													'perimeterMeasurements.abdomen.difference',
-												)}
+												{...register('perimeterMeasurements.abdomen.difference')}
 											/>
 										</div>
 									</div>
@@ -319,45 +304,31 @@ export function PhysicalReassessmentForm() {
 								<div className="w-full flex gap-5 sm:flex-col">
 									<div className="gap-5 w-1/2 sm:w-full flex flex-col">
 										<div className="flex gap-5 items-center bg-orange-100 p-4">
-											<Label className="w-full max-w-[60px]">
-												Coxa Superior:
-											</Label>
+											<Label className="w-full max-w-[60px]">Coxa Superior:</Label>
 											<div className="grid grid-cols-3 gap-2 ">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.upperThigh.previousRight',
-													)}
+													{...register('perimeterMeasurements.upperThigh.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.upperThigh.currentRight',
-													)}
+													{...register('perimeterMeasurements.upperThigh.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.upperThigh.differenceRight',
-													)}
+													{...register('perimeterMeasurements.upperThigh.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.upperThigh.previousLeft',
-													)}
+													{...register('perimeterMeasurements.upperThigh.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.upperThigh.currentLeft',
-													)}
+													{...register('perimeterMeasurements.upperThigh.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.upperThigh.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.upperThigh.differenceLeft')}
 												/>
 											</div>
 										</div>
@@ -366,82 +337,56 @@ export function PhysicalReassessmentForm() {
 											<div className="grid grid-cols-3 gap-2">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.forearm.previousRight',
-													)}
+													{...register('perimeterMeasurements.forearm.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.forearm.currentRight',
-													)}
+													{...register('perimeterMeasurements.forearm.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.forearm.differenceRight',
-													)}
+													{...register('perimeterMeasurements.forearm.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.forearm.previousLeft',
-													)}
+													{...register('perimeterMeasurements.forearm.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.forearm.currentLeft',
-													)}
+													{...register('perimeterMeasurements.forearm.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.forearm.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.forearm.differenceLeft')}
 												/>
 											</div>
 										</div>
 										<div className="flex gap-5 items-center bg-orange-100 p-4">
-											<Label className="w-full max-w-[60px]">
-												Braço Relaxado:
-											</Label>
+											<Label className="w-full max-w-[60px]">Braço Relaxado:</Label>
 											<div className="grid grid-cols-3 gap-2">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.relaxedArm.previousRight',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.relaxedArm.currentRight',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.relaxedArm.differenceRight',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.relaxedArm.previousLeft',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.relaxedArm.currentLeft',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.relaxedArm.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.relaxedArm.differenceLeft')}
 												/>
 											</div>
 										</div>
@@ -451,131 +396,89 @@ export function PhysicalReassessmentForm() {
 									</div>
 									<div className="gap-5 w-1/2 flex-col sm:w-full flex">
 										<div className="flex gap-5 items-center bg-orange-100 p-4">
-											<Label className="w-full max-w-[60px]">
-												Coxa Medial:
-											</Label>
+											<Label className="w-full max-w-[60px]">Coxa Medial:</Label>
 											<div className="grid grid-cols-3 gap-2">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.medialThigh.previousRight',
-													)}
+													{...register('perimeterMeasurements.medialThigh.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.medialThigh.currentRight',
-													)}
+													{...register('perimeterMeasurements.medialThigh.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.medialThigh.differenceRight',
-													)}
+													{...register('perimeterMeasurements.medialThigh.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.medialThigh.previousLeft',
-													)}
+													{...register('perimeterMeasurements.medialThigh.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.medialThigh.currentLeft',
-													)}
+													{...register('perimeterMeasurements.medialThigh.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.medialThigh.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.medialThigh.differenceLeft')}
 												/>
 											</div>
 										</div>
 										<div className="flex gap-5 items-center px-4">
-											<Label className="w-full max-w-[60px]">
-												Panturrilha:
-											</Label>
+											<Label className="w-full max-w-[60px]">Panturrilha:</Label>
 											<div className="grid grid-cols-3 gap-2">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.calf.previousRight',
-													)}
+													{...register('perimeterMeasurements.calf.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.calf.currentRight',
-													)}
+													{...register('perimeterMeasurements.calf.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.calf.differenceRight',
-													)}
+													{...register('perimeterMeasurements.calf.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.calf.previousLeft',
-													)}
+													{...register('perimeterMeasurements.calf.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.calf.currentLeft',
-													)}
+													{...register('perimeterMeasurements.calf.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.calf.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.calf.differenceLeft')}
 												/>
 											</div>
 										</div>
 										<div className="flex gap-5 items-center bg-orange-100 p-4">
-											<Label className="w-full max-w-[60px]">
-												Braço Contraído:
-											</Label>
+											<Label className="w-full max-w-[60px]">Braço Contraído:</Label>
 											<div className="grid grid-cols-3 gap-2">
 												<Input
 													placeholder="Direita anterior"
-													{...register(
-														'perimeterMeasurements.contractedArm.previousRight',
-													)}
+													{...register('perimeterMeasurements.contractedArm.previousRight')}
 												/>
 												<Input
 													placeholder="Direita atual"
-													{...register(
-														'perimeterMeasurements.contractedArm.currentRight',
-													)}
+													{...register('perimeterMeasurements.contractedArm.currentRight')}
 												/>
 												<Input
 													placeholder="Diferença direita"
-													{...register(
-														'perimeterMeasurements.contractedArm.differenceRight',
-													)}
+													{...register('perimeterMeasurements.contractedArm.differenceRight')}
 												/>
 												<Input
 													placeholder="Esquerda anterior"
-													{...register(
-														'perimeterMeasurements.contractedArm.previousLeft',
-													)}
+													{...register('perimeterMeasurements.contractedArm.previousLeft')}
 												/>
 												<Input
 													placeholder="Esquerda atual"
-													{...register(
-														'perimeterMeasurements.contractedArm.currentLeft',
-													)}
+													{...register('perimeterMeasurements.contractedArm.currentLeft')}
 												/>
 												<Input
 													placeholder="Diferença esquerda"
-													{...register(
-														'perimeterMeasurements.contractedArm.differenceLeft',
-													)}
+													{...register('perimeterMeasurements.contractedArm.differenceLeft')}
 												/>
 											</div>
 										</div>
@@ -596,9 +499,7 @@ export function PhysicalReassessmentForm() {
 							<div className="shadow bg-orange500 rounded-sm text-white text-2xl w-8 h-8 flex items-center justify-center">
 								<PersonArmsSpread />
 							</div>
-							<p className="text-gray900 font-semibold">
-								Composição Corporal (Guedes)
-							</p>
+							<p className="text-gray900 font-semibold">Composição Corporal (Guedes)</p>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent>
@@ -608,85 +509,56 @@ export function PhysicalReassessmentForm() {
 									<div className="gap-5 w-1/2 sm:w-full flex flex-col">
 										<div className="flex gap-2 items-center">
 											<Label>Peso Atual (kg):</Label>
-											<Input
-												placeholder="kg"
-												{...register('bodyCompositionGuedes.kg')}
-											/>
+											<Input placeholder="kg" {...register('bodyCompositionGuedes.kg')} />
 										</div>
 									</div>
 									<div>
-										<h3 className="font-semibold mb-3 mt-5">
-											Dobras Cutâneas (mm)
-										</h3>
+										<h3 className="font-semibold mb-3 mt-5">Dobras Cutâneas (mm)</h3>
 										<div className="w-full flex gap-5 sm:flex-col">
 											<div className="gap-5 w-1/2 sm:w-full flex flex-col">
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														DC Subescapular:
-													</Label>
+													<Label className="w-full max-w-[80px]">DC Subescapular:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionGuedes.DCsubescapular.previous',
-														)}
+														{...register('bodyCompositionGuedes.DCsubescapular.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionGuedes.DCsubescapular.current',
-														)}
+														{...register('bodyCompositionGuedes.DCsubescapular.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionGuedes.DCsubescapular.difference',
-														)}
+														{...register('bodyCompositionGuedes.DCsubescapular.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center px-4">
-													<Label className="w-full max-w-[80px]">
-														DC Coxa:
-													</Label>
+													<Label className="w-full max-w-[80px]">DC Coxa:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionGuedes.DCthigh.previous',
-														)}
+														{...register('bodyCompositionGuedes.DCthigh.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionGuedes.DCthigh.current',
-														)}
+														{...register('bodyCompositionGuedes.DCthigh.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionGuedes.DCthigh.difference',
-														)}
+														{...register('bodyCompositionGuedes.DCthigh.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														DC Tríceps:
-													</Label>
+													<Label className="w-full max-w-[80px]">DC Tríceps:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionGuedes.DCtriceps.previous',
-														)}
+														{...register('bodyCompositionGuedes.DCtriceps.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionGuedes.DCtriceps.current',
-														)}
+														{...register('bodyCompositionGuedes.DCtriceps.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionGuedes.DCtriceps.difference',
-														)}
+														{...register('bodyCompositionGuedes.DCtriceps.difference')}
 													/>
 												</div>
 											</div>
@@ -695,49 +567,33 @@ export function PhysicalReassessmentForm() {
 											</div>
 											<div className="gap-5 w-1/2 flex-col sm:w-full flex">
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														DC Suprailíaca:
-													</Label>
+													<Label className="w-full max-w-[80px]">DC Suprailíaca:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionGuedes.DCsuprailiaca.previous',
-														)}
+														{...register('bodyCompositionGuedes.DCsuprailiaca.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionGuedes.DCsuprailiaca.current',
-														)}
+														{...register('bodyCompositionGuedes.DCsuprailiaca.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionGuedes.DCsuprailiaca.difference',
-														)}
+														{...register('bodyCompositionGuedes.DCsuprailiaca.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center px-4">
-													<Label className="w-full max-w-[80px]">
-														DC Abdome:
-													</Label>
+													<Label className="w-full max-w-[80px]">DC Abdome:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionGuedes.DCabdomen.previous',
-														)}
+														{...register('bodyCompositionGuedes.DCabdomen.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionGuedes.DCabdomen.current',
-														)}
+														{...register('bodyCompositionGuedes.DCabdomen.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionGuedes.DCabdomen.difference',
-														)}
+														{...register('bodyCompositionGuedes.DCabdomen.difference')}
 													/>
 												</div>
 											</div>
@@ -758,9 +614,7 @@ export function PhysicalReassessmentForm() {
 							<div className="shadow bg-orange500 rounded-sm text-white text-2xl w-8 h-8 flex items-center justify-center">
 								<PersonArmsSpread />
 							</div>
-							<p className="text-gray900 font-semibold">
-								Composição Corporal (Jackson e Pollock)
-							</p>
+							<p className="text-gray900 font-semibold">Composição Corporal (Jackson e Pollock)</p>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent>
@@ -768,99 +622,67 @@ export function PhysicalReassessmentForm() {
 							<div className="shadow p-5 rounded-sm">
 								<div className="w-full flex gap-5 flex-col">
 									<div>
-										<h3 className="font-semibold mb-3 mt-5">
-											Dobras Cutâneas (mm)
-										</h3>
+										<h3 className="font-semibold mb-3 mt-5">Dobras Cutâneas (mm)</h3>
 										<div className="w-full flex gap-5 sm:flex-col">
 											<div className="gap-5 w-1/2 sm:w-full flex flex-col">
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														Subescapular:
-													</Label>
+													<Label className="w-full max-w-[80px]">Subescapular:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.subescapular.previous',
-														)}
+														{...register('bodyCompositionPollock.subescapular.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.subescapular.current',
-														)}
+														{...register('bodyCompositionPollock.subescapular.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.subescapular.difference',
-														)}
+														{...register('bodyCompositionPollock.subescapular.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center px-4">
-													<Label className="w-full max-w-[80px]">
-														Peitoral:
-													</Label>
+													<Label className="w-full max-w-[80px]">Peitoral:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.breastplate.previous',
-														)}
+														{...register('bodyCompositionPollock.breastplate.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.breastplate.current',
-														)}
+														{...register('bodyCompositionPollock.breastplate.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.breastplate.difference',
-														)}
+														{...register('bodyCompositionPollock.breastplate.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
 													<Label className="w-full max-w-[80px]">Coxa:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.thigh.previous',
-														)}
+														{...register('bodyCompositionPollock.thigh.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.thigh.current',
-														)}
+														{...register('bodyCompositionPollock.thigh.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.thigh.difference',
-														)}
+														{...register('bodyCompositionPollock.thigh.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center px-4">
-													<Label className="w-full max-w-[80px]">
-														Tríceps:
-													</Label>
+													<Label className="w-full max-w-[80px]">Tríceps:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.triceps.previous',
-														)}
+														{...register('bodyCompositionPollock.triceps.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.triceps.current',
-														)}
+														{...register('bodyCompositionPollock.triceps.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.triceps.difference',
-														)}
+														{...register('bodyCompositionPollock.triceps.difference')}
 													/>
 												</div>
 											</div>
@@ -869,70 +691,48 @@ export function PhysicalReassessmentForm() {
 											</div>
 											<div className="gap-5 w-1/2 flex-col sm:w-full flex">
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														Suprailíaca:
-													</Label>
+													<Label className="w-full max-w-[80px]">Suprailíaca:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.suprailiaca.previous',
-														)}
+														{...register('bodyCompositionPollock.suprailiaca.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.suprailiaca.current',
-														)}
+														{...register('bodyCompositionPollock.suprailiaca.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.suprailiaca.difference',
-														)}
+														{...register('bodyCompositionPollock.suprailiaca.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center px-4">
 													<Label className="w-full max-w-[80px]">Abdome:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.abdomen.previous',
-														)}
+														{...register('bodyCompositionPollock.abdomen.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.abdomen.current',
-														)}
+														{...register('bodyCompositionPollock.abdomen.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.abdomen.difference',
-														)}
+														{...register('bodyCompositionPollock.abdomen.difference')}
 													/>
 												</div>
 												<div className="flex gap-2 items-center bg-orange-100 p-4">
-													<Label className="w-full max-w-[80px]">
-														Axilar-média:
-													</Label>
+													<Label className="w-full max-w-[80px]">Axilar-média:</Label>
 													<Input
 														placeholder="Anterior"
-														{...register(
-															'bodyCompositionPollock.axilarMedia.previous',
-														)}
+														{...register('bodyCompositionPollock.axilarMedia.previous')}
 													/>
 													<Input
 														placeholder="Atual"
-														{...register(
-															'bodyCompositionPollock.axilarMedia.current',
-														)}
+														{...register('bodyCompositionPollock.axilarMedia.current')}
 													/>
 													<Input
 														placeholder="Diferença"
-														{...register(
-															'bodyCompositionPollock.axilarMedia.difference',
-														)}
+														{...register('bodyCompositionPollock.axilarMedia.difference')}
 													/>
 												</div>
 											</div>

@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 
 import { columns } from '@/app/(dashboard)/cash-flow/(components)/manual-incomes-columns'
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import {
 	Table,
@@ -25,19 +26,14 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import { useManualIncomes } from '@/hooks/manual-incomes/use-manual-incomes'
-import { numbMessage, strMessage } from '@/utils/custom-error'
+import { numbMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
-import { Pagination } from '@/components/pagination'
 
 const schema = z.object({
-	id: z
-		.string(strMessage('identificador'))
-		.min(1, 'O campo identificador é obrigatório'),
-	date: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
-	value: z.number(numbMessage('valor')).min(1, 'O campo valor é obrigatório'),
-	subject: z
-		.string(strMessage('assunto'))
-		.min(1, 'O campo assunto é obrigatório'),
+	id: z.string(strMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	date: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
+	value: z.number(numbMsg('valor')).min(1, 'O campo valor é obrigatório'),
+	subject: z.string(strMsg('assunto')).min(1, 'O campo assunto é obrigatório'),
 })
 
 export type ManualIncomeFormData = z.infer<typeof schema>
@@ -95,10 +91,7 @@ export function ManualIncomesDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -108,26 +101,17 @@ export function ManualIncomesDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

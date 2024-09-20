@@ -1,61 +1,61 @@
 'use client'
 
 import {
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable
+	type ColumnFiltersState,
+	type SortingState,
+	type VisibilityState,
+	flexRender,
+	getCoreRowModel,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	useReactTable,
 } from '@tanstack/react-table'
 import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
 
 import { columns } from '@/app/(dashboard)/students/(components)/physical-assessment-history-columns'
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from '@/components/ui/table'
-import { boolMessage, strMessage } from '@/utils/custom-error'
 import { usePhysicalAssessmentHistory } from '@/hooks/physical-assessment-histories/use-physical-assessment-history'
+import { boolMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
-import { Pagination } from '@/components/pagination'
 
 const schema = z.object({
-  id: z.number().min(1, 'O campo identificador é obrigatório'),
-  data: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
-  goalAchieved: z.boolean(boolMessage('objetivo alcançado')),
-});
+	id: z.number().min(1, 'O campo identificador é obrigatório'),
+	data: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
+	goalAchieved: z.boolean(boolMsg('objetivo alcançado')),
+})
 
-export type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>
 
 export function PhysicalAssessmentHistoryDataTable() {
-  const router = useRouter()
-  const { physicalAssessmentHistory, meta } = usePhysicalAssessmentHistory({
-    pageIndex: 1,
-    searchTerm: 'oi',
-    sorting: [
-      {
-        id: 'data',
-        desc: true,
-      },
-    ],
-  })
+	const router = useRouter()
+	const { physicalAssessmentHistory, meta } = usePhysicalAssessmentHistory({
+		pageIndex: 1,
+		searchTerm: 'oi',
+		sorting: [
+			{
+				id: 'data',
+				desc: true,
+			},
+		],
+	})
 
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -104,9 +104,7 @@ export function PhysicalAssessmentHistoryDataTable() {
 										key={column.id}
 										className="capitalize"
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'data' && 'data'}
 									</DropdownMenuCheckboxItem>
@@ -125,10 +123,7 @@ export function PhysicalAssessmentHistoryDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -138,26 +133,17 @@ export function PhysicalAssessmentHistoryDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

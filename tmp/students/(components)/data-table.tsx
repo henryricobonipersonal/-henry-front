@@ -1,7 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-import { useState } from 'react'
 import {
 	type ColumnFiltersState,
 	type SortingState,
@@ -14,8 +12,13 @@ import {
 	useReactTable,
 } from '@tanstack/react-table'
 import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
+import { useState } from 'react'
 import { z } from 'zod'
 
+import { columns } from '@/app/(dashboard)/students/(components)/columns'
+import { Pagination } from '@/components/pagination'
+import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
 	DropdownMenuCheckboxItem,
@@ -31,48 +34,47 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { Pagination } from '@/components/pagination'
-import { Button } from '@/components/ui/button'
-import { columns } from '@/app/(dashboard)/students/(components)/columns'
-import { numbMessage, strMessage } from '@/utils/custom-error'
 import { useStudents } from '@/hooks/students/use-students'
+import { numbMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
 
 const addressSchema = z.object({
-	zipCode: z.string(strMessage('CEP')).min(1, 'O campo CEP é obrigatório'),
-	state: z.string(strMessage('estado')).min(1, 'O campo estado é obrigatório'),
-	city: z.string(strMessage('cidade')).min(1, 'O campo cidade é obrigatório'),
-	neighborhood: z.string(strMessage('bairro')).min(1, 'O campo bairro é obrigatório'),
-	street: z.string(strMessage('rua')).min(1, 'O campo rua é obrigatório'),
-	number: z.number(numbMessage('número')).min(1, 'O campo número é obrigatório'),
-	complement: z.string(strMessage('complemento')).optional(),
-});
+	zipCode: z.string(strMsg('CEP')).min(1, 'O campo CEP é obrigatório'),
+	state: z.string(strMsg('estado')).min(1, 'O campo estado é obrigatório'),
+	city: z.string(strMsg('cidade')).min(1, 'O campo cidade é obrigatório'),
+	neighborhood: z.string(strMsg('bairro')).min(1, 'O campo bairro é obrigatório'),
+	street: z.string(strMsg('rua')).min(1, 'O campo rua é obrigatório'),
+	number: z.number(numbMsg('número')).min(1, 'O campo número é obrigatório'),
+	complement: z.string(strMsg('complemento')).optional(),
+})
 
 const socialsSchema = z.object({
-	instagram: z.string(strMessage('instagram')).optional(),
-	facebook: z.string(strMessage('facebook')).optional(),
-	twitter: z.string(strMessage('twitter')).optional(),
-	other: z.string(strMessage('outras redes sociais')).optional(),
-});
+	instagram: z.string(strMsg('instagram')).optional(),
+	facebook: z.string(strMsg('facebook')).optional(),
+	twitter: z.string(strMsg('twitter')).optional(),
+	other: z.string(strMsg('outras redes sociais')).optional(),
+})
 
 const loginSchema = z.object({
-	email: z.string(strMessage('email')).email('O campo email deve ser um email válido'),
-	password: z.string(strMessage('senha')).optional(),
-});
+	email: z.string(strMsg('email')).email('O campo email deve ser um email válido'),
+	password: z.string(strMsg('senha')).optional(),
+})
 
 const schema = z.object({
-	id: z.number(numbMessage('identificador')).min(1, 'O campo identificador é obrigatório'),
-	name: z.string(strMessage('nome')).min(1, 'O campo nome é obrigatório'),
-	phone: z.string(strMessage('telefone')).min(1, 'O campo telefone é obrigatório'),
-	birthDate: z.string(strMessage('data de nascimento')).min(1, 'O campo data de nascimento é obrigatório'),
-	document: z.string(strMessage('documento')).min(1, 'O campo documento é obrigatório'),
-	identity: z.string(strMessage('identidade')).min(1, 'O campo identidade é obrigatório'),
+	id: z.number(numbMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	name: z.string(strMsg('nome')).min(1, 'O campo nome é obrigatório'),
+	phone: z.string(strMsg('telefone')).min(1, 'O campo telefone é obrigatório'),
+	birthDate: z
+		.string(strMsg('data de nascimento'))
+		.min(1, 'O campo data de nascimento é obrigatório'),
+	document: z.string(strMsg('documento')).min(1, 'O campo documento é obrigatório'),
+	identity: z.string(strMsg('identidade')).min(1, 'O campo identidade é obrigatório'),
 	address: addressSchema,
 	socials: socialsSchema,
 	login: loginSchema,
-});
+})
 
-export type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>
 
 export function StudentsDataTable() {
 	const router = useRouter()
@@ -126,9 +128,7 @@ export function StudentsDataTable() {
 				<Input
 					placeholder="Filtrar por nome..."
 					value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-					onChange={(event) =>
-						table.getColumn('name')?.setFilterValue(event.target.value)
-					}
+					onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
 					className="max-w-sm"
 				/>
 				<DropdownMenu>
@@ -147,9 +147,7 @@ export function StudentsDataTable() {
 										key={column.id}
 										className="capitalize"
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'name' && 'Nome'}
 										{column.id === 'email' && 'E-mail'}
@@ -161,7 +159,7 @@ export function StudentsDataTable() {
 				</DropdownMenu>
 			</div>
 			<div className="rounded-md border">
-      <Table>
+				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
@@ -170,10 +168,7 @@ export function StudentsDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -183,26 +178,17 @@ export function StudentsDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>
@@ -221,5 +207,3 @@ export function StudentsDataTable() {
 		</div>
 	)
 }
-
-

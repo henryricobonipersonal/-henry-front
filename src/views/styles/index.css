@@ -68,13 +68,15 @@
   }
 }
 
-.logo {
-  width: 350px;
-  height: auto;
-  filter: drop-shadow(0 0 0.75rem cyan);
-  transition: filter 0.3s ease-in-out;
+.scrollbar-transparent::-webkit-scrollbar {
+  width: 12px;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 1.5rem cyan);
+.scrollbar-transparent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-transparent::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
 }

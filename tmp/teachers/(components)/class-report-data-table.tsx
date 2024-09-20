@@ -12,9 +12,9 @@ import {
 	useReactTable,
 } from '@tanstack/react-table'
 import { ChevronDown } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { z } from 'zod'
-import { useRouter } from 'next/navigation'
 
 import { columns } from '@/app/(dashboard)/teachers/(components)/class-report-columns'
 import { Pagination } from '@/components/pagination'
@@ -33,24 +33,18 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { boolMessage, numbMessage, strMessage } from '@/utils/custom-error'
 import { useClassReports } from '@/hooks/class-reports/use-class-reports'
+import { boolMsg, numbMsg, strMsg } from '@/utils/custom-error'
 
 const schema = z.object({
-	id: z
-		.number(numbMessage('identificador'))
-		.min(1, 'O campo identificador é obrigatório'),
-	date: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
-	hours: z
-		.string(strMessage('horário'))
-		.min(1, 'O campo horário é obrigatório'),
-	replaceClass: z.boolean(boolMessage('reposição de aula')),
-	typeOfTraining: z
-		.string(strMessage('tipo de treino'))
-		.min(1, 'O campo tipo de treino é obrigatório'),
-	price: z.number(numbMessage('preço')).min(1, 'O campo preço é obrigatório'),
+	id: z.number(numbMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	date: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
+	hours: z.string(strMsg('horário')).min(1, 'O campo horário é obrigatório'),
+	replaceClass: z.boolean(boolMsg('reposição de aula')),
+	typeOfTraining: z.string(strMsg('tipo de treino')).min(1, 'O campo tipo de treino é obrigatório'),
+	price: z.number(numbMsg('preço')).min(1, 'O campo preço é obrigatório'),
 	paymentStatus: z
-		.string(strMessage('status de pagamento'))
+		.string(strMsg('status de pagamento'))
 		.min(1, 'O campo status de pagamento é obrigatório'),
 })
 
@@ -116,9 +110,7 @@ export function ClassReportDataTable() {
 										key={column.id}
 										className="capitalize"
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'date' && 'Data'}
 										{column.id === 'hours' && 'Hora'}
@@ -142,10 +134,7 @@ export function ClassReportDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -155,26 +144,17 @@ export function ClassReportDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

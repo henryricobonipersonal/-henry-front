@@ -1,20 +1,29 @@
 'use client'
 
-import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
 import {
-  Barbell,
-  Brain,
-  BriefcaseMetal,
-  Cigarette,
-  Heartbeat,
-  Person,
-  Stethoscope,
+	Barbell,
+	Brain,
+	BriefcaseMetal,
+	Cigarette,
+	Heartbeat,
+	Person,
+	Stethoscope,
 } from '@phosphor-icons/react/dist/ssr'
 import { SaveAll } from 'lucide-react'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
 	Select,
 	SelectContent,
@@ -24,81 +33,63 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from '@/components/ui/accordion'
-import { strMessage } from '@/utils/custom-error'
+import { strMsg } from '@/utils/custom-error'
 import { Format } from '@/utils/format'
 
 const schema = z.object({
 	ageAndGender: z.object({
-		ageAndGender: z.string(strMessage('idade e gênero')).optional(),
+		ageAndGender: z.string(strMsg('idade e gênero')).optional(),
 	}),
 	professionFamily: z.object({
-		profession: z
-			.string(strMessage('profissão'))
-			.min(1, 'O campo profissão é obrigatório'),
+		profession: z.string(strMsg('profissão')).min(1, 'O campo profissão é obrigatório'),
 		workHours: z
-			.string(strMessage('horas de trabalho por dia'))
+			.string(strMsg('horas de trabalho por dia'))
 			.min(1, 'O campo horas de trabalho por dia é obrigatório'),
-		haveChildren: z.string(strMessage('tem crianças')).optional(),
-		ageChildren: z.string(strMessage('idade das crianças')).optional(),
+		haveChildren: z.string(strMsg('tem crianças')).optional(),
+		ageChildren: z.string(strMsg('idade das crianças')).optional(),
 	}),
 	smoker: z.object({
 		isSmoker: z.string().optional(),
 	}),
 	heartHealth: z.object({
-		heartProblems: z.string(strMessage('problemas de coração')).optional(),
-		dateOfLastCardiacExam: z.string(
-			strMessage('data do último exame cardíaco'),
-		),
-		whatHeartProblems: z.string(strMessage('quais problemas de coração')),
-		medicalMonitoring: z.string(strMessage('acompanhamento médico')),
+		heartProblems: z.string(strMsg('problemas de coração')).optional(),
+		dateOfLastCardiacExam: z.string(strMsg('data do último exame cardíaco')),
+		whatHeartProblems: z.string(strMsg('quais problemas de coração')),
+		medicalMonitoring: z.string(strMsg('acompanhamento médico')),
 		familyHistoryOfHeartDisease: z
-			.string(strMessage('histórico familiar de doenças cardíacas'))
+			.string(strMsg('histórico familiar de doenças cardíacas'))
 			.optional(),
-		degreeOfKinship: z.string(strMessage('grau de parentesco')).optional(),
+		degreeOfKinship: z.string(strMsg('grau de parentesco')).optional(),
 	}),
 	mentalHealth: z.object({
-		haveMentalIllness: z.string(strMessage('tem doença mental')).optional(),
-		haveMedicalCare: z.string(strMessage('tem atendimento médico')).optional(),
-		recommendationIfThereIsAMentalCrisis: z.string(
-			strMessage('recomendação em caso de crise mental'),
-		),
+		haveMentalIllness: z.string(strMsg('tem doença mental')).optional(),
+		haveMedicalCare: z.string(strMsg('tem atendimento médico')).optional(),
+		recommendationIfThereIsAMentalCrisis: z.string(strMsg('recomendação em caso de crise mental')),
 	}),
 	jointHealth: z.object({
-		haveJointPathology: z.string(strMessage('tem patologia articular')),
-		feelPainWhenMoving: z.string(strMessage('sente dor ao se mover')),
-		causeOfPain: z.string(strMessage('causa da dor')),
-		haveAdoctorsRecommendation: z.string(strMessage('tem recomendação médica')),
-		practicePhysicalActivity: z
-			.string(strMessage('pratica atividade física'))
-			.optional(),
-		whichOneAndHowLong: z.string(strMessage('qual e por quanto tempo')),
-		weeklyFrequency: z.string(strMessage('frequência semanal')),
-		obs: z.string(strMessage('observações')),
+		haveJointPathology: z.string(strMsg('tem patologia articular')),
+		feelPainWhenMoving: z.string(strMsg('sente dor ao se mover')),
+		causeOfPain: z.string(strMsg('causa da dor')),
+		haveAdoctorsRecommendation: z.string(strMsg('tem recomendação médica')),
+		practicePhysicalActivity: z.string(strMsg('pratica atividade física')).optional(),
+		whichOneAndHowLong: z.string(strMsg('qual e por quanto tempo')),
+		weeklyFrequency: z.string(strMsg('frequência semanal')),
+		obs: z.string(strMsg('observações')),
 	}),
 	generalHealth: z.object({
-		hadSurgery: z.string(strMessage('teve cirurgia')).optional(),
-		whichAndWhy: z.string(strMessage('qual e por quê')),
-		healthProblems: z.string(strMessage('problemas de saúde')),
+		hadSurgery: z.string(strMsg('teve cirurgia')).optional(),
+		whichAndWhy: z.string(strMsg('qual e por quê')),
+		healthProblems: z.string(strMsg('problemas de saúde')),
 	}),
 })
 
 type AnamneseStudentFormData = z.infer<typeof schema>
 
 export function AnamneseForm() {
-	const { register, handleSubmit, control, watch, setValue } =
-		useForm<AnamneseStudentFormData>({
-			resolver: zodResolver(schema),
-		})
+	const { register, handleSubmit, control, watch, setValue } = useForm<AnamneseStudentFormData>({
+		resolver: zodResolver(schema),
+	})
 
 	const watchDate = watch('heartHealth.dateOfLastCardiacExam')
 
@@ -113,20 +104,11 @@ export function AnamneseForm() {
 	}
 
 	return (
-		<form
-			onSubmit={handleSubmit(handleAnamneseSchema)}
-			className="w-full flex flex-col gap-4"
-		>
+		<form onSubmit={handleSubmit(handleAnamneseSchema)} className="w-full flex flex-col gap-4">
 			<div className="relative">
-				<Button
-					type="submit"
-					className="fixed top-[60px] right-20 z-[999] max-w-[168px]"
-				>
+				<Button type="submit" className="fixed top-[60px] right-20 z-[999] max-w-[168px]">
 					<span>
-						<SaveAll
-							className="size-5 text-white z-50 mr-1.5"
-							strokeWidth={2}
-						/>
+						<SaveAll className="size-5 text-white z-50 mr-1.5" strokeWidth={2} />
 					</span>
 					Salvar
 				</Button>
@@ -151,10 +133,7 @@ export function AnamneseForm() {
 										control={control}
 										name="ageAndGender.ageAndGender"
 										render={({ field }) => (
-											<Select
-												onValueChange={field.onChange}
-												value={field.value}
-											>
+											<Select onValueChange={field.onChange} value={field.value}>
 												<SelectTrigger className="w-full max-w-[320px] sm:max-w-full">
 													<SelectValue placeholder="Sexo e Idade" />
 												</SelectTrigger>
@@ -227,10 +206,7 @@ export function AnamneseForm() {
 												control={control}
 												name="professionFamily.haveChildren"
 												render={({ field }) => (
-													<Select
-														onValueChange={field.onChange}
-														value={field.value}
-													>
+													<Select onValueChange={field.onChange} value={field.value}>
 														<SelectTrigger className="w-full">
 															<SelectValue placeholder="Possui filhos?" />
 														</SelectTrigger>
@@ -279,19 +255,14 @@ export function AnamneseForm() {
 												control={control}
 												name="smoker.isSmoker"
 												render={({ field }) => (
-													<Select
-														onValueChange={field.onChange}
-														defaultValue={field.value}
-													>
+													<Select onValueChange={field.onChange} defaultValue={field.value}>
 														<SelectTrigger className="w-full max-w-[320px] sm:max-w-full">
 															<SelectValue placeholder="Fumante?" />
 														</SelectTrigger>
 														<SelectContent>
 															<SelectGroup>
 																<SelectLabel>Fumante?</SelectLabel>
-																<SelectItem value="não-fuma">
-																	Não fuma
-																</SelectItem>
+																<SelectItem value="não-fuma">Não fuma</SelectItem>
 																<SelectItem value="parou-de-fumar-há-menos-de-1-ano">
 																	Parou de fumar há menos de 1 ano
 																</SelectItem>
@@ -346,18 +317,13 @@ export function AnamneseForm() {
 													control={control}
 													name="heartHealth.heartProblems"
 													render={({ field }) => (
-														<Select
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-														>
+														<Select onValueChange={field.onChange} defaultValue={field.value}>
 															<SelectTrigger className="w-full">
 																<SelectValue placeholder="Possui problemas cardíacos?" />
 															</SelectTrigger>
 															<SelectContent>
 																<SelectGroup>
-																	<SelectLabel>
-																		Possui problemas cardíacos?
-																	</SelectLabel>
+																	<SelectLabel>Possui problemas cardíacos?</SelectLabel>
 																	<SelectItem value="sim">Sim</SelectItem>
 																	<SelectItem value="não">Não</SelectItem>
 																</SelectGroup>
@@ -384,9 +350,8 @@ export function AnamneseForm() {
 										</div>
 										<div className="w-full">
 											<Label>
-												Caso possua acompanhamento médico cardiológico,
-												recomendação médica cardiológica ou limitação a prática
-												de atividade física, descreva aqui:
+												Caso possua acompanhamento médico cardiológico, recomendação médica
+												cardiológica ou limitação a prática de atividade física, descreva aqui:
 											</Label>
 											<Textarea
 												placeholder="Descrever aqui"
@@ -400,25 +365,20 @@ export function AnamneseForm() {
 									<div className="gap-5 w-1/2 sm:w-full flex">
 										<div className="w-1/2">
 											<Label>
-												Possui histórico de cardiopatias na família,
-												especialmente antes dos 50 anos:{' '}
+												Possui histórico de cardiopatias na família, especialmente antes dos 50
+												anos:{' '}
 											</Label>
 											<Controller
 												control={control}
 												name="heartHealth.familyHistoryOfHeartDisease"
 												render={({ field }) => (
-													<Select
-														onValueChange={field.onChange}
-														defaultValue={field.value}
-													>
+													<Select onValueChange={field.onChange} defaultValue={field.value}>
 														<SelectTrigger className="w-full">
 															<SelectValue placeholder="Histórico de cardiopatias na família" />
 														</SelectTrigger>
 														<SelectContent>
 															<SelectGroup>
-																<SelectLabel>
-																	Histórico de cardiopatias na família?
-																</SelectLabel>
+																<SelectLabel>Histórico de cardiopatias na família?</SelectLabel>
 																<SelectItem value="sim">Sim</SelectItem>
 																<SelectItem value="não">Não</SelectItem>
 															</SelectGroup>
@@ -433,10 +393,7 @@ export function AnamneseForm() {
 												control={control}
 												name="heartHealth.degreeOfKinship"
 												render={({ field }) => (
-													<Select
-														onValueChange={field.onChange}
-														defaultValue={field.value}
-													>
+													<Select onValueChange={field.onChange} defaultValue={field.value}>
 														<SelectTrigger className="w-full">
 															<SelectValue placeholder="Grau de parentesco" />
 														</SelectTrigger>
@@ -476,25 +433,20 @@ export function AnamneseForm() {
 										<div className="flex w-full gap-5">
 											<div className="w-full">
 												<Label>
-													Tem ou já teve: Crise de ansiedade, Síndrome do Pânico
-													ou qualquer outra situação semelhante:
+													Tem ou já teve: Crise de ansiedade, Síndrome do Pânico ou qualquer outra
+													situação semelhante:
 												</Label>
 												<Controller
 													control={control}
 													name="mentalHealth.haveMentalIllness"
 													render={({ field }) => (
-														<Select
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-														>
+														<Select onValueChange={field.onChange} defaultValue={field.value}>
 															<SelectTrigger className="w-full">
 																<SelectValue placeholder="Possui problemas associados a mente" />
 															</SelectTrigger>
 															<SelectContent>
 																<SelectGroup>
-																	<SelectLabel>
-																		Possui problemas associados a mente?
-																	</SelectLabel>
+																	<SelectLabel>Possui problemas associados a mente?</SelectLabel>
 																	<SelectItem value="sim">Sim</SelectItem>
 																	<SelectItem value="não">Não</SelectItem>
 																</SelectGroup>
@@ -505,25 +457,20 @@ export function AnamneseForm() {
 											</div>
 											<div className="w-full">
 												<Label>
-													Em caso de sim, teve ou tem tido acompanhamento médico
-													para tratar a questão:
+													Em caso de sim, teve ou tem tido acompanhamento médico para tratar a
+													questão:
 												</Label>
 												<Controller
 													control={control}
 													name="mentalHealth.haveMedicalCare"
 													render={({ field }) => (
-														<Select
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-														>
+														<Select onValueChange={field.onChange} defaultValue={field.value}>
 															<SelectTrigger className="w-full">
 																<SelectValue placeholder="Possui acompanhamento médico" />
 															</SelectTrigger>
 															<SelectContent>
 																<SelectGroup>
-																	<SelectLabel>
-																		Possui acompanhamento médico?
-																	</SelectLabel>
+																	<SelectLabel>Possui acompanhamento médico?</SelectLabel>
 																	<SelectItem value="sim">Sim</SelectItem>
 																	<SelectItem value="não">Não</SelectItem>
 																</SelectGroup>
@@ -534,14 +481,10 @@ export function AnamneseForm() {
 											</div>
 										</div>
 										<div className="w-full">
-											<Label>
-												Caso tal situação ocorra qual a recomendação:
-											</Label>
+											<Label>Caso tal situação ocorra qual a recomendação:</Label>
 											<Textarea
 												placeholder="Descrever aqui"
-												{...register(
-													'mentalHealth.recommendationIfThereIsAMentalCrisis',
-												)}
+												{...register('mentalHealth.recommendationIfThereIsAMentalCrisis')}
 											/>
 										</div>
 									</div>
@@ -562,9 +505,7 @@ export function AnamneseForm() {
 							<div className="shadow bg-orange500 rounded-sm text-white text-2xl w-8 h-8 flex items-center justify-center">
 								<Barbell />
 							</div>
-							<p className="text-gray900 font-semibold">
-								Saúde das Articulações e Físico
-							</p>
+							<p className="text-gray900 font-semibold">Saúde das Articulações e Físico</p>
 						</div>
 					</AccordionTrigger>
 					<AccordionContent>
@@ -575,8 +516,8 @@ export function AnamneseForm() {
 										<div className="flex w-full gap-5">
 											<div className="w-full">
 												<Label>
-													Possui alguma patologia articular? Joelhos. Quadril.
-													Coluna. Ombro. Outros:
+													Possui alguma patologia articular? Joelhos. Quadril. Coluna. Ombro.
+													Outros:
 												</Label>
 												<Textarea
 													placeholder="Descrever aqui"
@@ -585,8 +526,8 @@ export function AnamneseForm() {
 											</div>
 											<div className="w-full">
 												<Label>
-													Sente dores pelo corpo em algum movimento do dia a dia
-													ou exercício físico:
+													Sente dores pelo corpo em algum movimento do dia a dia ou exercício
+													físico:
 												</Label>
 												<Textarea
 													placeholder="Descrever aqui"
@@ -595,9 +536,7 @@ export function AnamneseForm() {
 											</div>
 										</div>
 										<div className="w-full">
-											<Label>
-												Em caso de sim qual a suposta causa na sua opinião:
-											</Label>
+											<Label>Em caso de sim qual a suposta causa na sua opinião:</Label>
 											<Textarea
 												placeholder="Descrever aqui"
 												{...register('jointHealth.causeOfPain')}
@@ -622,18 +561,13 @@ export function AnamneseForm() {
 													control={control}
 													name="jointHealth.practicePhysicalActivity"
 													render={({ field }) => (
-														<Select
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-														>
+														<Select onValueChange={field.onChange} defaultValue={field.value}>
 															<SelectTrigger className="w-full">
 																<SelectValue placeholder="Pratica alguma atividade física" />
 															</SelectTrigger>
 															<SelectContent>
 																<SelectGroup>
-																	<SelectLabel>
-																		Pratica alguma atividade física?
-																	</SelectLabel>
+																	<SelectLabel>Pratica alguma atividade física?</SelectLabel>
 																	<SelectItem value="sim">Sim</SelectItem>
 																	<SelectItem value="não">Não</SelectItem>
 																</SelectGroup>
@@ -661,14 +595,10 @@ export function AnamneseForm() {
 										</div>
 										<div className="w-full">
 											<Label>
-												Você possui alguma outra informação relevante que deva
-												ser acrescentada que não foi perguntado neste
-												questionário? Obs:
+												Você possui alguma outra informação relevante que deva ser acrescentada que
+												não foi perguntado neste questionário? Obs:
 											</Label>
-											<Textarea
-												placeholder="Descrever aqui"
-												{...register('jointHealth.obs')}
-											/>
+											<Textarea placeholder="Descrever aqui" {...register('jointHealth.obs')} />
 										</div>
 									</div>
 								</div>
@@ -697,18 +627,13 @@ export function AnamneseForm() {
 													control={control}
 													name="generalHealth.hadSurgery"
 													render={({ field }) => (
-														<Select
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-														>
+														<Select onValueChange={field.onChange} defaultValue={field.value}>
 															<SelectTrigger className="w-full">
 																<SelectValue placeholder="Já passou por alguma cirurgia" />
 															</SelectTrigger>
 															<SelectContent>
 																<SelectGroup>
-																	<SelectLabel>
-																		Já passou por alguma cirurgia?
-																	</SelectLabel>
+																	<SelectLabel>Já passou por alguma cirurgia?</SelectLabel>
 																	<SelectItem value="sim">Sim</SelectItem>
 																	<SelectItem value="não">Não</SelectItem>
 																</SelectGroup>
@@ -728,8 +653,8 @@ export function AnamneseForm() {
 										</div>
 										<div className="w-full">
 											<Label>
-												Possui algum problema de saúde? Se sim, descrever o
-												problema e se está realizando tratamento médico:
+												Possui algum problema de saúde? Se sim, descrever o problema e se está
+												realizando tratamento médico:
 											</Label>
 											<Textarea
 												placeholder="Descrever aqui"

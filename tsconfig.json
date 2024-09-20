@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     /* Custon */
     "outDir": "./dist",
     "baseUrl": "./",
@@ -29,15 +29,26 @@
       ],
       "@/*": [
         "./src/*"
-      ],
+      ]
     },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "src",
+    ".next/types/**/*.ts"
+, "tmp/login"  ],
+  "exclude": [
+    "node_modules"
   ]
 }

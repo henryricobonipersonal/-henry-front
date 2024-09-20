@@ -16,6 +16,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 
 import { columns } from '@/app/(dashboard)/students/(components)/goals-columns'
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
@@ -32,14 +33,13 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import { useGoals } from '@/hooks/goals/use-goals'
-import { boolMessage, strMessage } from '@/utils/custom-error'
+import { boolMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
-import { Pagination } from '@/components/pagination'
 
 const schema = z.object({
 	id: z.number().min(1, 'O campo identificador é obrigatório'),
-	data: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
-	goalAchieved: z.boolean(boolMessage('objetivo alcançado')),
+	data: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
+	goalAchieved: z.boolean(boolMsg('objetivo alcançado')),
 })
 
 export type FormData = z.infer<typeof schema>
@@ -104,9 +104,7 @@ export function GoalsDataTable() {
 										key={column.id}
 										className="capitalize"
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'data' && 'data'}
 										{column.id === 'goalAchieved' && 'Status Meta'}
@@ -126,10 +124,7 @@ export function GoalsDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -139,26 +134,17 @@ export function GoalsDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

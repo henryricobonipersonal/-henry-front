@@ -32,20 +32,16 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { boolMessage, strMessage } from '@/utils/custom-error'
 import { useStudentGoals } from '@/hooks/student-goals/use-student-goals'
+import { boolMsg, strMsg } from '@/utils/custom-error'
 import { useRouter } from 'next/navigation'
 
 const schema = z.object({
-	id: z
-		.string(strMessage('identificador'))
-		.min(1, 'O campo identificador é obrigatório'),
-	date: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
-	name: z.string(strMessage('nome')).min(1, 'O campo nome é obrigatório'),
-	description: z
-		.string(strMessage('descrição'))
-		.min(1, 'O campo descrição é obrigatório'),
-	status: z.boolean(boolMessage('status')),
+	id: z.string(strMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	date: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
+	name: z.string(strMsg('nome')).min(1, 'O campo nome é obrigatório'),
+	description: z.string(strMsg('descrição')).min(1, 'O campo descrição é obrigatório'),
+	status: z.boolean(boolMsg('status')),
 })
 
 export type StudentGoalsFormData = z.infer<typeof schema>
@@ -109,9 +105,7 @@ export function StudentGoalsDataTable() {
 									<DropdownMenuCheckboxItem
 										key={column.id}
 										checked={column.getIsVisible()}
-										onCheckedChange={(value) =>
-											column.toggleVisibility(!!value)
-										}
+										onCheckedChange={(value) => column.toggleVisibility(!!value)}
 									>
 										{column.id === 'date' && 'Data'}
 										{column.id === 'name' && 'Nome'}
@@ -133,10 +127,7 @@ export function StudentGoalsDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -146,26 +137,17 @@ export function StudentGoalsDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>

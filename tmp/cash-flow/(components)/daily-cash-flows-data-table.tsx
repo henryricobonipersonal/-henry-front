@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import {
 	type ColumnFiltersState,
 	type SortingState,
@@ -12,9 +11,12 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import { z } from 'zod'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { z } from 'zod'
 
+import { columns } from '@/app/(dashboard)/cash-flow/(components)/daily-cash-flows-columns'
+import { Pagination } from '@/components/pagination'
 import {
 	Table,
 	TableBody,
@@ -23,29 +25,21 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
-import { columns } from '@/app/(dashboard)/cash-flow/(components)/daily-cash-flows-columns'
-import { Pagination } from '@/components/pagination'
-import { numbMessage, strMessage } from '@/utils/custom-error'
 import { useDailyCashFlows } from '@/hooks/daily-cash-flows/use-daily-cash-flows'
+import { numbMsg, strMsg } from '@/utils/custom-error'
 
 const schema = z.object({
-	id: z
-		.string(strMessage('identificador'))
-		.min(1, 'O campo identificador é obrigatório'),
-	date: z.string(strMessage('data')).min(1, 'O campo data é obrigatório'),
+	id: z.string(strMsg('identificador')).min(1, 'O campo identificador é obrigatório'),
+	date: z.string(strMsg('data')).min(1, 'O campo data é obrigatório'),
 	automaticIncome: z
-		.number(numbMessage('renda automática'))
+		.number(numbMsg('renda automática'))
 		.min(1, 'O campo renda automática é obrigatório'),
-	manualIncome: z
-		.number(numbMessage('renda manual'))
-		.min(1, 'O campo renda manual é obrigatório'),
+	manualIncome: z.number(numbMsg('renda manual')).min(1, 'O campo renda manual é obrigatório'),
 	automaticExpense: z
-		.number(numbMessage('despesa automática'))
+		.number(numbMsg('despesa automática'))
 		.min(1, 'O campo despesa automática é obrigatório'),
-	manualExpense: z
-		.number(numbMessage('despesa manual'))
-		.min(1, 'O campo despesa manual é obrigatório'),
-	amount: z.number(numbMessage('valor')).min(1, 'O campo valor é obrigatório'),
+	manualExpense: z.number(numbMsg('despesa manual')).min(1, 'O campo despesa manual é obrigatório'),
+	amount: z.number(numbMsg('valor')).min(1, 'O campo valor é obrigatório'),
 })
 
 export type FormData = z.infer<typeof schema>
@@ -86,7 +80,7 @@ export function DailyCashFlowDataTable() {
 		},
 	})
 
-  function handlePaginate(newPageIndex: number) {
+	function handlePaginate(newPageIndex: number) {
 		router.push(`/your-page-path?page=${newPageIndex + 1}`)
 	}
 
@@ -102,10 +96,7 @@ export function DailyCashFlowDataTable() {
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
 								})}
@@ -115,26 +106,17 @@ export function DailyCashFlowDataTable() {
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && 'selected'}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center"
-								>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
 									Nenhum resultado encontrado.
 								</TableCell>
 							</TableRow>
@@ -142,7 +124,7 @@ export function DailyCashFlowDataTable() {
 					</TableBody>
 				</Table>
 			</div>
-      {meta && (
+			{meta && (
 				<Pagination
 					pageIndex={meta.pageIndex}
 					pageSize={meta.perPage}
