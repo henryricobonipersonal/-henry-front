@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { usePagination } from '@app/hooks/use-pagination'
-import { findManyUsers } from '@app/services/users/find-many-users'
+import { usersService } from '@app/services/users'
+import { useEffect } from 'react'
 
 interface Props {
 	pageIndex: number
@@ -10,29 +11,51 @@ interface Props {
 }
 
 export function useStudents({ pageIndex, perPage = 12, role }: Props) {
-		const { currentPage, nextPage, previousPage, setPage } = usePagination({ pageIndex })
+	const queryClient = useQueryClient()
+	const pagination = usePagination({ perPage, pageIndex })
 
-		const { data, isLoading } = useQuery({
-			queryKey: ['students', { page: currentPage, perPage, role }],
-			queryFn: () => findManyUsers({ pageIndex, perPage, role }),
-		})
+	const { data, isLoading } = useQuery({
+		queryKey: ['students', { page: pagination.currentPage, perPage, role }],
+		queryFn: async () => {
+			const response = await usersService.findManyUsers({
+				pageIndex: pagination.currentPage,
+				perPage,
+				role,
+			})
+			pagination.setTotalItems(response.meta.totalCount)
+			return response
+		},
+	})
 
-		const totalItems = data?.meta.totalCount ?? 0
-		const totalPages = Math.ceil(totalItems / perPage)
-		const hasNextPage = currentPage < totalPages
-		const hasPreviousPage = currentPage > 1
+	useEffect(() => {
+		if (pagination.hasNextPage) {
+			const nextPage = pagination.currentPage + 1
 
-		return {
-			students: data ?? [],
-			isLoading,
-			pagination: {
-				currentPage,
-				totalPages,
-				hasNextPage,
-				hasPreviousPage,
-				nextPage,
-				previousPage,
-				setPage,
-			}
+			queryClient.prefetchQuery({
+				queryKey: ['students', { page: nextPage, perPage, role }],
+				queryFn: async () => {
+					const response = await usersService.findManyUsers({
+						pageIndex: pagination.currentPage,
+						perPage,
+						role,
+					})
+					pagination.setTotalItems(response.meta.totalCount)
+					return response
+				},
+			})
 		}
+	}, [
+		pagination.currentPage,
+		pagination.hasNextPage,
+		role,
+		perPage,
+		queryClient,
+		pagination.setTotalItems,
+	])
+
+	return {
+		students: data?.users ?? [],
+		isLoading,
+		pagination,
 	}
+}

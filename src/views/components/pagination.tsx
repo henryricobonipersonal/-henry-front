@@ -1,9 +1,7 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react'
 
-import { useEffect, useState } from 'react'
 import { Button } from '@views/components/ui/button'
 import { Input } from '@views/components/ui/input'
-import { usePagination } from '@app/hooks/use-pagination'
 
 interface Props {
 	pageIndex: number
@@ -12,7 +10,7 @@ interface Props {
 	onPageChange: (newPageIndex: number) => void
 }
 
-export function Pagination({ pageIndex, pageSize, totalCount, onPageChange }: Props) {
+export function Pagination({ pageIndex, totalCount, onPageChange }: Props) {
 
 
 	// const [goToPage, setGoToPage] = useState<string>((pageIndex + 1).toString())
@@ -45,6 +43,9 @@ export function Pagination({ pageIndex, pageSize, totalCount, onPageChange }: Pr
 	// useEffect(() => {
 	// 	setGoToPage((pageIndex + 1).toString())
 	// }, [pageIndex])
+
+	const totalPages = 10
+	const currentPage = 2
 
 	return (
 		<div className="mt-8 flex items-center justify-between px-8">

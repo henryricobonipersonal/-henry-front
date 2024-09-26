@@ -1,3 +1,7 @@
+import { useMemo } from 'react'
+
+import { generateEllipsisPagination } from '@app/utils/generate-ellipsis-pagination'
+
 import {
 	Table,
 	TableBody,
@@ -8,12 +12,25 @@ import {
 	TableRow,
 } from '@views/components/ui/table'
 import { useStudents } from '@app/hooks/students/use-users'
-import { Pagination, PaginationButton, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@views/components/ui/pagination'
-
-
+import {
+	Pagination,
+	PaginationButton,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationNext,
+	PaginationPrevious,
+} from '@views/components/ui/pagination'
 
 export function DataTableDemo() {
-	const { isLoading, students } = useStudents()
+	const { isLoading, students, pagination } = useStudents({ pageIndex: 1 })
+
+	const pages = useMemo(() => {
+		return generateEllipsisPagination({
+			currentPage: pagination.currentPage,
+			totalPages: pagination.totalPages,
+		})
+	}, [pagination.currentPage, pagination.totalPages])
 
 	return (
 		<div>
@@ -52,19 +69,42 @@ export function DataTableDemo() {
 						<Pagination>
 							<PaginationContent>
 								<PaginationItem>
-									<PaginationPrevious />
+									<PaginationPrevious
+										onClick={pagination.previousPage}
+										disabled={!pagination.hasPreviousPage}
+									/>
 								</PaginationItem>
 
-								<PaginationItem>
-									<PaginationButton isActive>1</PaginationButton>
-								</PaginationItem>
+								{pages.map((page) => {
+									const isEllipsisPosition = typeof page === 'string'
+
+									if (isEllipsisPosition) {
+										return (
+											<PaginationItem key={page}>
+												<PaginationButton disabled>
+													<PaginationEllipsis />
+												</PaginationButton>
+											</PaginationItem>
+										)
+									}
+
+									return (
+										<PaginationItem key={page}>
+											<PaginationButton
+												isActive={pagination.currentPage === page}
+												onClick={() => pagination.setPage(Number(page))}
+											>
+												{page}
+											</PaginationButton>
+										</PaginationItem>
+									)
+								})}
 
 								<PaginationItem>
-									<PaginationButton>2</PaginationButton>
-								</PaginationItem>
-
-								<PaginationItem>
-									<PaginationNext />
+									<PaginationNext
+										onClick={pagination.nextPage}
+										disabled={!pagination.hasNextPage}
+									/>
 								</PaginationItem>
 							</PaginationContent>
 						</Pagination>
